@@ -1,11 +1,17 @@
 ##Team Strengths
+
 Jonathan - Technical in JS and CSS for the scope of this class
+
 Dario - Technical in JS, leadership skills, group cohesiveness
+
 Valton - communication, organization, graphic design
 
 ##How to best use these strengths in the project
+
 Jonathan - Take on more leadership type role and mentoring/pair programming with others in their weaker abilities
+
 Dario - Have a hand more in the JS technical aspects of the project
+
 Valton - Appearance support, group cohesion
 
 ##Professional competencies to develop greater strength
