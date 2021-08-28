@@ -6,6 +6,8 @@ Dario - Technical in JS, leadership skills, group cohesiveness
 
 Valton - communication, organization, graphic design
 
+Steve - CSS and design web layout, graphic design, research, sociability, branding
+
 
 
 ## How to best use these strengths in the project
@@ -16,7 +18,7 @@ Dario - Have a hand more in the JS technical aspects of the project
 
 Valton - Appearance support, group cohesion
 
-
+Steve - CSS, design in general, branding, media, photography
 
 ## Professional competencies to develop greater strength
 
@@ -26,7 +28,7 @@ Dario - Css, organizational skills
 
 Valton - JS technical ability
 
-
+Steve - Js ability, leadership
 
 ## How to approach the day to day work
 
@@ -36,7 +38,7 @@ Dario - Collaborate before beginning the day
 
 Valton - Follow lead and and learn from the more technical teammates
 
-
+Steve - Work as hard as my team, spend a lot of time on css
 
 ## What will be your groups process to resolve conflict
 
