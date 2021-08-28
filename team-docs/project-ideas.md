@@ -4,7 +4,7 @@ A 2d game rendering floors and walls with different levels of floors, items, and
 
 This game is to be created for entertainment as games usually are.
 
-##MVP
+## MVP
 At least one floor with entities and items rendered and working on that floor.
 
 ## Project Idea 2
