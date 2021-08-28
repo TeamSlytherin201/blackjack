@@ -1,9 +1,13 @@
 # Cave Explorer - Name TBD
 
 ## Team Members
+
 Jonathan Brock - https://github.com/JBrockDev
+
 Dario Vitorte - https://github.com/dar5o
+
 Valton Jones - https://github.com/jones-trae
+
 Steve Ngo - https://github.com/alsosteve
 
 
