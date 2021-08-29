@@ -7,6 +7,9 @@ This game is to be created for entertainment as games usually are.
 ## MVP
 At least one floor with entities and items rendered and working on that floor.
 
+
+
+
 ## Project Idea 2
 Tournament Blackjack
 A typical casino table appearance with seats for up to four players from the same computer to sit to play. They play against a computer operated dealer with the standard rules of blackjack play.
