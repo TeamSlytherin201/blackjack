@@ -1,4 +1,4 @@
-# Cave Explorer - Name TBD
+# Black Jack - Name TBD
 
 ## Team Members
 
@@ -12,7 +12,7 @@ Steve Ngo - https://github.com/alsosteve
 
 
 ## Game Idea
-This is a cave explorer 2d game rendering floors and walls, hopefully with different floors in difficulty. Items and entities will be randomly generated as well as stairs to advance. At the end, a boss battle will be had where you use all of the items you've gained to battle for victory.
+This is a retro-themed black-jack game for one to possibly 4 players. The game will keep track of the user's cash reserve and deal a randomly generated hand via a virtual multi-deck shoe.
 
 ## [Miro Wireframe](https://miro.com/app/board/o9J_lzqo2oA=/)
 
