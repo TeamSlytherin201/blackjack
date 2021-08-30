@@ -9,11 +9,12 @@ main {
   height: 80%;
 }
 
-#play-area {
+main div {
   width: 900px;
   background-color: black;
-  height: 500px;
+  height: calc(100vh - 140px);
 }
+
 header {
   display: flex;
   justify-content: center;
