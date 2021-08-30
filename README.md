@@ -18,3 +18,8 @@ This is a cave explorer 2d game rendering floors and walls, hopefully with diffe
 
 ## [User Stories](https://docs.google.com/document/d/1uSH2SUSozwvltVE28eezp9DjvHI8goBbXFEEcF6qoGo/edit?usp=sharing)
 
+
+## [Wire Frame](https://miro.com/app/board/o9J_lzqo2oA=/)
+
+## [Domain Model](https://www.figma.com/file/ZcxMd3oJrvUCF9D87ejqwO/Domain-Model?node-id=0%3A1)
+
