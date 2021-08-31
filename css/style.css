@@ -60,6 +60,7 @@ footer {
   overflow: auto;
   height: 100px;
 }
+
 #player-area{
   display:grid;
   grid-template-columns: auto auto auto auto;
@@ -67,6 +68,7 @@ footer {
   grid-column-gap: 40px;
   margin-top: 250px;
 }
+
 #player-0, #player-1, #player-2, #player-3 {
   background-color:lightseagreen;
   width: 250px;
@@ -75,13 +77,10 @@ footer {
 }
 
 #dealer {
-
   background-color:mediumaquamarine;
   width: 400px;
   height: 250px;
-  border-top: 20%;
   margin: auto;
   left: 500px;
-  top: 150px;
- 
+  top: 150px; 
 }
