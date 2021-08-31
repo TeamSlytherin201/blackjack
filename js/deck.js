@@ -4,7 +4,7 @@ function Deck() {
   this.suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
   this.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
   this.deck = [];
-}
+};
 
 Deck.prototype.assembleDeck = function() {
   for (let v = 0; v < this.values.length; v++) {
@@ -27,7 +27,6 @@ function Card(value, suit, score) {
   this.score = score;
 };
 
-
 function DeckShoe() {
   this.shoeSize = 7;
   this.shoe = [];
@@ -39,12 +38,12 @@ DeckShoe.prototype.assembleShoe = function() {
     newDeck.assembleDeck();
     for (let j = 0; j < newDeck.deck.length; j++) {
       this.shoe.push(newDeck.deck[j]);
-    } 
-  }
+    }; 
+  };
 };
 
 DeckShoe.prototype.shuffleShoe = function() {
-  for (var i = 0; i < 5000; i++) {
+  for (var i = 0; i < 25000; i++) {
     let cardOne, cardTwo, cardThree;
     cardOne = Math.floor((Math.random() * this.shoe.length));
     while (cardTwo === cardOne || cardTwo === undefined) {
@@ -57,11 +56,10 @@ DeckShoe.prototype.shuffleShoe = function() {
     this.shoe[cardOne] = this.shoe[cardTwo];
     this.shoe[cardTwo] = this.shoe[cardThree];
     this.shoe[cardThree] = tempCard;
-  }
+  };
   console.log(this.shoe);
-}
+};
 
 let deckShoe = new DeckShoe();
 deckShoe.assembleShoe();
-
 deckShoe.shuffleShoe();
