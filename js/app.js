@@ -38,4 +38,4 @@ function compareHands() {
   }
 }
 
-compareHands();
+//compareHands();

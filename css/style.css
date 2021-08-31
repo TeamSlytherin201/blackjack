@@ -3,6 +3,7 @@ background-color: #5D4632 ;
 width: 100%;
 height: 70px;
 }
+
 main {
   display: flex;
   justify-content: center;
@@ -71,4 +72,14 @@ footer {
 
 #rulesA {
 display: block;
+}
+
+
+/* main page table styling */
+#play-area {
+
+}
+
+#dealer-area {
+
 }
