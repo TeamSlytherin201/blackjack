@@ -60,8 +60,15 @@ Table.prototype.addPlayer = function(player, position) {
 };
 
 Table.prototype.dealHands = function() {
+  for (let i = 0; i < this.bets.length; i++) { // check if all players have bet
+    if (this.players[i] !== null) {
+      if (this.bets[i] === null) {
+        this.players.splice(i, 1, null);
+      };
+    };
+  };
   for (let i = 0; i < 2; i++) {
-    for (let i = 0; i < Player.allPlayers.length; i++) {
+    for (let i = 0; i < Player.allPlayers.length; i++) { // give card to players seated twice
       if (Player.allPlayers[i] !== null) {
         Player.allPlayers[i].getCard();
       };
@@ -89,6 +96,41 @@ Table.prototype.takeBet = function(amount, player) {
   return false;
 };
 
+Table.prototype.evaluateResults = function() {
+  let players = this.players;
+  let dealerTotal = players[4].getTotal();
+  let bets = this.bets;
+  let returnString;
+  returnString = "Dealer Total: " + dealerTotal;
+  console.log(returnString);
+  for (let i = 0; i < players.length - 1; i++) {
+    let player = players[i];
+    if (player !== null) {
+      let playerTotal = players[i].getTotal();
+      returnString = player.name + " Total: " + playerTotal;
+      console.log(returnString);
+      if (playerTotal > 21) {
+        returnString = player.name + " busted and lost " + bets[i];
+        console.log(returnString);
+      } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
+        if (dealerTotal > 21) {
+          returnString = "Dealer busted, ";
+        } else {
+          returnString = "";
+        };
+        returnString += player.name + " wins " + (bets[i] * 2);
+        console.log(returnString);
+      } else if (playerTotal < dealerTotal) {
+        returnString = player.name + " loses " + bets[i];
+        console.log(returnString);
+      } else {
+        returnString = player.name + " pushes!";
+        console.log(returnString);
+      };
+    };
+  };
+};
+
 let dealer = new Player("Bob", 0, true);
 let table = new Table(dealer);
 let joe = new Player("Joe", 50000, false);
@@ -99,18 +141,21 @@ let jon = new Player("Jon", 50000, false);
 table.addPlayer(jon, 3);
 
 
-//table.dealHands();
 console.log(table.players);
 table.takeBet(20000, joe);
 table.takeBet(40000, jim);
 table.takeBet(15000, jon);
 
-//  for (let i = 0; i < table.players.length; i++) {
-//    if (table.players[i] !== null) {
-//      while (table.players[i].getTotal() < 17) {
-//       table.players[i].getCard();
-//      }
-//    console.log(table.players[i].getTotal());
-//    console.log(table.players[i].hand);
-//    }
-// }
+table.dealHands();
+
+for (let i = 0; i < table.players.length; i++) {
+  if (table.players[i] !== null) {
+    while (table.players[i].getTotal() < 17) {
+      table.players[i].getCard();
+    };
+    console.log(table.players[i].getTotal());
+    console.log(table.players[i].hand);
+  };
+};
+
+table.evaluateResults();
