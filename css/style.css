@@ -81,14 +81,15 @@ footer {
   background-color:lightseagreen;
   width: 250px;
   height: 250px;
-  padding: 20px;
 }
-
+#dealer-area {
+  margin-top: 5%;
+}
 #dealer {
   background-color:mediumaquamarine;
   width: 400px;
   height: 250px;
   margin: auto;
   left: 500px;
-  top: 150px; 
+  top: 200px; 
 }
