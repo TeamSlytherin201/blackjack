@@ -11,7 +11,7 @@ main {
 }
 
 main div {
-  width: 900px;
+  width: 1300px;
   background-color: darkgreen;
   height: calc(100vh - 140px);
 }
@@ -61,26 +61,34 @@ footer {
   height: 100px;
 }
 
-.small {
-  color: white;
-  border-width: 5px;
-  height: 100px;
-}
-
-#rulesA {
-display: block;
+#player-area{
+  display:grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  grid-column-gap: 40px;
+  margin-top: 250px;
 }
 
 #rules {
   background-image: url(../img/BGBlue.jpeg);
 }
 
-
 /* main page table styling */
 #play-area {
-
 }
 
-#dealer-area {
+#player-0, #player-1, #player-2, #player-3 {
+  background-color:lightseagreen;
+  width: 250px;
+  height: 250px;
+  padding: 20px;
+}
 
+#dealer {
+  background-color:mediumaquamarine;
+  width: 400px;
+  height: 250px;
+  margin: auto;
+  left: 500px;
+  top: 150px; 
 }
