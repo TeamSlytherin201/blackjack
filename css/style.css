@@ -74,6 +74,10 @@ footer {
 display: block;
 }
 
+#rules {
+  background-image: url(../img/BGBlue.jpeg);
+}
+
 
 /* main page table styling */
 #play-area {
