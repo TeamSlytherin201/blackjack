@@ -3,6 +3,7 @@ background-color: #5D4632 ;
 width: 100%;
 height: 70px;
 }
+
 main {
   display: flex;
   justify-content: center;
@@ -52,4 +53,15 @@ li a:hover, .active {
 footer {
   position: fixed;
   bottom: 0px;
+}
+
+
+
+/* main page table styling */
+#play-area {
+
+}
+
+#dealer-area {
+
 }

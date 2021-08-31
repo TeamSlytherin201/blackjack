@@ -1,35 +1,116 @@
 "use strict";
 
-function Hand(position) {
-  this.hand = [];
-}
 
 function Player(name, money, isDealer) {
   this.name = name;
   this.money = money;
   this.isDealer = isDealer;
-  this.hand = new Hand();
+  this.hand = [];
   Player.allPlayers.push(this);
-}
+};
 Player.allPlayers = [];
 
+Player.prototype.getCard = function() {
+  this.hand.push(deckShoe.getCard());
+};
+
+Player.prototype.getTotal = function() {
+  let total = 0;
+  let aces = [];
+  for (let i = 0; i < this.hand.length; i++) {
+    if (this.hand[i].value === "A") {
+      aces.push(this.hand[i].value);
+    } else {
+      total += this.hand[i].score;
+    };
+  };
+  for (let i = 0; i < aces.length; i++) {
+    if (total + aces.length - 1 + 11 <= 21) {
+      total += 11;
+    } else {
+      total += 1;
+    };
+  };
+  return total;
+};
+
+Player.prototype.makeBet = function(amount) {
+  amount = parseInt(amount);
+  if (this.money >= amount) {
+    this.money -= amount;
+    return amount;
+  };
+  return 0;
+};
 
 function Table(dealer) {
-  this.players = [dealer, null, null, null, null];
+  this.players = [null, null, null, null, dealer];
+  this.bets = [null, null, null, null];
   Table.tables.push(this);
-}
+};
 Table.tables = [];
 
 Table.prototype.addPlayer = function(player, position) {
-  this.players.splice(position, 0, player);
-}
+  if (this.players[position] === null) {
+    this.players.splice(position, 1, player);
+    return true;
+  }
+  console.log("Sorry, there is already a player seated there.");
+  return false;
+};
 
 Table.prototype.dealHands = function() {
+  for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < Player.allPlayers.length; i++) {
+      if (Player.allPlayers[i] !== null) {
+        Player.allPlayers[i].getCard();
+      };
+    };
+  };
+};
 
+Table.prototype.playDealer = function() {
+  let dealer = this.players[4];
+  while (dealer.getTotal() < 17) {
+    dealer.getCard();
+  }
 }
 
+Table.prototype.takeBet = function(amount, player) {
+  let checkAmount = player.makeBet(amount);
+  if (checkAmount !== 0) {
+    for (let i = 0; i < this.players.length - 1; i++) { // exclude dealer -1
+      if (this.players[i] === player) {
+        this.bets[i] = amount;
+        return true;
+      };
+    };
+  };
+  return false;
+};
 
 let dealer = new Player("Bob", 0, true);
 let table = new Table(dealer);
+let joe = new Player("Joe", 50000, false);
+table.addPlayer(joe, 2);
+let jim = new Player("Jim", 50000, false);
+table.addPlayer(jim, 1);
+let jon = new Player("Jon", 50000, false);
+table.addPlayer(jon, 3);
 
-console.log(table);
+
+//table.dealHands();
+console.log(table.players);
+table.takeBet(20000, joe);
+table.takeBet(40000, jim);
+table.takeBet(15000, jon);
+
+//  for (let i = 0; i < table.players.length; i++) {
+//    if (table.players[i] !== null) {
+//      while (table.players[i].getTotal() < 17) {
+//       table.players[i].getCard();
+//      }
+//    console.log(table.players[i].getTotal());
+//    console.log(table.players[i].hand);
+//    }
+// }

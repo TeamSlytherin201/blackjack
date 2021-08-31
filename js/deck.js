@@ -63,10 +63,22 @@ DeckShoe.prototype.shuffleShoe = function() {
     this.shoe[cardTwo] = this.shoe[cardThree];
     this.shoe[cardThree] = tempCard;
   };
-  console.log(this.shoe);
 };
 
-// code for getting a shoe of cards to be dealt
+DeckShoe.prototype.getCard = function() {
+  this.checkIfEmpty();
+  let card = this.shoe[0];
+  this.shoe.shift();
+  this.checkIfEmpty();
+  return card;
+}
+
+DeckShoe.prototype.checkIfEmpty = function() {
+  if (this.shoe.length === 0) {
+    this.assembleShoe();
+    this.shuffleShoe();
+  };
+};
+
 let deckShoe = new DeckShoe();
-deckShoe.assembleShoe();
-deckShoe.shuffleShoe();
+deckShoe.checkIfEmpty(); // fill shoe with cards on run
