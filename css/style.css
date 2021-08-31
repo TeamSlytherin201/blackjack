@@ -12,7 +12,7 @@ main {
 }
 
 main div {
-  width: 900px;
+  width: 1300px;
   background-color: darkgreen;
   height: calc(100vh - 140px);
 }
@@ -63,11 +63,21 @@ footer {
   text-indent: 20px;
 }
 
+
 .small {
   font-family:Georgia, 'Times New Roman', Times, serif;
   color: white;
   text-indent: 20px;
   height: 70px;
+}
+
+
+#player-area{
+  display:grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  grid-column-gap: 40px;
+  margin-top: 250px;
 }
 
 
@@ -78,6 +88,7 @@ footer {
   height: calc(100vh - 170px);
   /* height: 600px; */
 
+
 }
  #rulesA {
    height: 100%;
@@ -87,11 +98,24 @@ footer {
    line-height: 1.5;
    font-size: large;
  }
+
 /* main page table styling */
 #play-area {
-
 }
 
+#player-0, #player-1, #player-2, #player-3 {
+  background-color:lightseagreen;
+  width: 250px;
+  height: 250px;
+}
 #dealer-area {
-
+  margin-top: 5%;
+}
+#dealer {
+  background-color:mediumaquamarine;
+  width: 400px;
+  height: 250px;
+  margin: auto;
+  left: 500px;
+  top: 200px; 
 }
