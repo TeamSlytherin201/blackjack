@@ -7,6 +7,7 @@ main {
   display: flex;
   justify-content: center;
   height: 80%;
+  background-color: darkgreen;
 }
 
 main div {
@@ -52,4 +53,22 @@ li a:hover, .active {
 footer {
   position: fixed;
   bottom: 0px;
+}
+
+  .large {
+  
+  color: white;
+  overflow: auto;
+  height: 100px;
+
+}
+
+.small {
+  color: white;
+  border-width: 5px;
+  height: 100px;
+}
+
+#rulesA {
+display: block;
 }
