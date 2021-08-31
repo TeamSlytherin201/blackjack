@@ -6,6 +6,7 @@ function Player(name, money, isDealer) {
   this.money = money;
   this.isDealer = isDealer;
   this.hand = [];
+  this.id = Player.allPlayers.length;
   Player.allPlayers.push(this);
 };
 Player.allPlayers = [];
@@ -43,6 +44,10 @@ Player.prototype.makeBet = function(amount) {
   return 0;
 };
 
+Player.prototype.giveMoney = function(amount) {
+  this.money += amount;
+};
+
 function Table(dealer) {
   this.players = [null, null, null, null, dealer];
   this.bets = [null, null, null, null];
@@ -53,6 +58,7 @@ Table.tables = [];
 Table.prototype.addPlayer = function(player, position) {
   if (this.players[position] === null) {
     this.players.splice(position, 1, player);
+    this.saveData();
     return true;
   }
   console.log("Sorry, there is already a player seated there.");
@@ -96,7 +102,7 @@ Table.prototype.takeBet = function(amount, player) {
   return false;
 };
 
-Table.prototype.evaluateResults = function() {
+Table.prototype.evaluateResults = function(dealerNatural) {
   let players = this.players;
   let dealerTotal = players[4].getTotal();
   let bets = this.bets;
@@ -106,10 +112,18 @@ Table.prototype.evaluateResults = function() {
   for (let i = 0; i < players.length - 1; i++) {
     let player = players[i];
     if (player !== null) {
+      let playerNatural = checkIfNatural(player);
       let playerTotal = players[i].getTotal();
       returnString = player.name + " Total: " + playerTotal;
       console.log(returnString);
-      if (playerTotal > 21) {
+      if (dealerNatural && !playerNatural) {
+        returnString = "Dealer has natural 21, player loses.";
+        console.log(returnString);
+      } else if (playerNatural && !dealerNatural) {
+        returnString = player.name + " has natural 21, player wins " + (bets[i] * 2.5);
+        console.log(returnString);
+        player.giveMoney((bets[i] * 2.5));
+      } else if (playerTotal > 21) {
         returnString = player.name + " busted and lost " + bets[i];
         console.log(returnString);
       } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
@@ -120,19 +134,76 @@ Table.prototype.evaluateResults = function() {
         };
         returnString += player.name + " wins " + (bets[i] * 2);
         console.log(returnString);
+        player.giveMoney((bets[i] * 2));
       } else if (playerTotal < dealerTotal) {
         returnString = player.name + " loses " + bets[i];
         console.log(returnString);
       } else {
-        returnString = player.name + " pushes!";
+        if (dealerNatural) {
+          returnString = "Both players natural 21, ";
+        } else {
+          returnString = "";
+        };
+        returnString += player.name + " pushes!";
         console.log(returnString);
       };
+      player.hand = [];
+    };
+  };
+  players[4].hand = [];
+  this.resetBets();
+  this.saveData();
+};
+
+Table.prototype.resetBets = function() {
+  this.bets = [null, null, null, null];
+};
+
+Table.prototype.saveData = function() {
+  let playerData = Player.allPlayers.slice();
+  for (let i = 0; i < this.bets.length; i++) {
+    let bet = this.bets[i];
+    if (bet !== null) {
+      for (let j = 0; j < playerData.length; j++) {
+        if (this.players[i].id == playerData[i].id) {
+          playerData[i].money += bet;
+          playerData[i].hand = [];
+        };
+      };
+    };
+  };
+  let stringPlayerData = JSON.stringify(playerData);
+  localStorage.setItem("players", stringPlayerData);
+};
+
+Table.prototype.loadData = function() {
+  let oldData = localStorage.getItem("players");
+  if (oldData !== null) {
+    let playerPojo = JSON.parse(oldData);
+    for (let i = 0; i < playerPojo.length; i++) {
+      let player = playerPojo[i];
+      player.money = parseInt(player.money);
+      player.money = (player.isDealer === "true");
+      new Player(player.name, player.money, player.isDealer);
+      console.log(playerPojo[i]);
     };
   };
 };
 
+function checkIfNatural(player) { // check if natural 21
+  let playerTotal = parseInt(player.getTotal());
+  if (playerTotal === 21 && player.hand.length === 2) {
+    return true;
+  };
+  return false;
+};
+
+
 let dealer = new Player("Bob", 0, true);
 let table = new Table(dealer);
+table.loadData();
+
+
 let joe = new Player("Joe", 50000, false);
 table.addPlayer(joe, 2);
 let jim = new Player("Jim", 50000, false);
@@ -141,21 +212,21 @@ let jon = new Player("Jon", 50000, false);
 table.addPlayer(jon, 3);
 
 
-console.log(table.players);
 table.takeBet(20000, joe);
 table.takeBet(40000, jim);
 table.takeBet(15000, jon);
 
 table.dealHands();
 
-for (let i = 0; i < table.players.length; i++) {
-  if (table.players[i] !== null) {
-    while (table.players[i].getTotal() < 17) {
-      table.players[i].getCard();
+let dealerNatural = checkIfNatural(table.players[4]);
+if (!dealerNatural) {
+  for (let i = 0; i < table.players.length; i++) {
+    if (table.players[i] !== null) {
+      while (table.players[i].getTotal() < 17) {
+        table.players[i].getCard();
+      };
     };
-    console.log(table.players[i].getTotal());
-    console.log(table.players[i].hand);
   };
 };
+table.evaluateResults(dealerNatural);
 
-table.evaluateResults();
