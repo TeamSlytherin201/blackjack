@@ -1,12 +1,16 @@
 "use strict";
 
 
-function Player(name, money, isDealer) {
+function Player(name, money, isDealer, id) {
   this.name = name;
   this.money = money;
   this.isDealer = isDealer;
   this.hand = [];
-  this.id = Player.allPlayers.length;
+  if (id !== undefined) {
+    this.id = id;
+  } else {
+    this.id = Player.allPlayers.length;
+  };
   Player.allPlayers.push(this);
 };
 Player.allPlayers = [];
@@ -48,12 +52,16 @@ Player.prototype.giveMoney = function(amount) {
   this.money += amount;
 };
 
-function Table(dealer) {
-  this.players = [null, null, null, null, dealer];
+function Table() {
+  this.players = [null, null, null, null];
   this.bets = [null, null, null, null];
   Table.tables.push(this);
 };
 Table.tables = [];
+
+Table.prototype.addDealer = function(player) {
+  this.players.push(player);
+};
 
 Table.prototype.addPlayer = function(player, position) {
   if (this.players[position] === null) {
@@ -112,6 +120,7 @@ Table.prototype.evaluateResults = function(dealerNatural) {
   for (let i = 0; i < players.length - 1; i++) {
     let player = players[i];
     if (player !== null) {
+      console.log(player.money);
       let playerNatural = checkIfNatural(player);
       let playerTotal = players[i].getTotal();
       returnString = player.name + " Total: " + playerTotal;
@@ -183,20 +192,30 @@ Table.prototype.loadData = function() {
     for (let i = 0; i < playerPojo.length; i++) {
       let player = playerPojo[i];
       player.money = parseInt(player.money);
-      player.money = (player.isDealer === "true");
-      new Player(player.name, player.money, player.isDealer);
+      let newPlayer = new Player(player.name, player.money, player.isDealer);
+      if (!player.isDealer) {
+        table.addPlayer(newPlayer, i);
+        table.takeBet(1000, newPlayer);
+        console.log("added " + newPlayer.name);
+      }
     };
   } else {
-    let joe = new Player("Joe", 50000, false);
+    let dealer = new Player("Bob", 0, true, 0);
+    let joe = new Player("Joe", 50000, false, 1);
     table.addPlayer(joe, 2);
-    let jim = new Player("Jim", 50000, false);
+    let jim = new Player("Jim", 50000, false, 2);
     table.addPlayer(jim, 1);
-    let jon = new Player("Jon", 50000, false);
+    let jon = new Player("Jon", 50000, false, 3);
     table.addPlayer(jon, 3);
     table.takeBet(20000, joe);
     table.takeBet(40000, jim);
     table.takeBet(15000, jon);
   };
+};
+
+Table.prototype.getDealer = function() {
+  this.players.push(Player.allPlayers[0]);
+  return this.players[4];
 };
 
 function checkIfNatural(player) { // check if natural 21
@@ -208,17 +227,14 @@ function checkIfNatural(player) { // check if natural 21
 };
 
 
-let dealer = new Player("Bob", 0, true);
-let table = new Table(dealer);
+
+
+let dealer = Player.allPlayers[0];
+let table = new Table();
 table.loadData();
-
-
-
-
-
-
-
+table.getDealer(Player.allPlayers[0]);
 table.dealHands();
+console.log(table.players);
 
 let dealerNatural = checkIfNatural(table.players[4]);
 if (!dealerNatural) {
