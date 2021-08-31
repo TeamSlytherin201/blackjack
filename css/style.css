@@ -69,6 +69,14 @@ footer {
   margin-top: 250px;
 }
 
+#rules {
+  background-image: url(../img/BGBlue.jpeg);
+}
+
+/* main page table styling */
+#play-area {
+}
+
 #player-0, #player-1, #player-2, #player-3 {
   background-color:lightseagreen;
   width: 250px;
