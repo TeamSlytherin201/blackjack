@@ -1,5 +1,12 @@
 'use strict';
 
+function Card(value, suit, score, img) {
+  this.value = value;
+  this.suit = suit;
+  this.score = score;
+  this.img = img;
+};
+
 function Deck() {
   this.suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
   this.values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
@@ -15,17 +22,16 @@ Deck.prototype.assembleDeck = function() {
       } else if (this.values[v] === "A") {
         score = 11;
       };
-      var card = new Card(this.values[v], this.suits[s], score);
+      var cardImg = "card_";
+      cardImg += this.suits[s].toLowerCase().substr(0,3);
+      cardImg += this.values[v].toLowerCase();
+      cardImg += ".png";
+      var card = new Card(this.values[v], this.suits[s], score, cardImg);
       this.deck.push(card);
     };
   };
 };
 
-function Card(value, suit, score) {
-  this.value = value;
-  this.suit = suit;
-  this.score = score;
-};
 
 function DeckShoe() {
   this.shoeSize = 7;
@@ -43,7 +49,7 @@ DeckShoe.prototype.assembleShoe = function() {
 };
 
 DeckShoe.prototype.shuffleShoe = function() {
-  for (var i = 0; i < 25000; i++) {
+  for (var i = 0; i < 5000; i++) {
     let cardOne, cardTwo, cardThree;
     cardOne = Math.floor((Math.random() * this.shoe.length));
     while (cardTwo === cardOne || cardTwo === undefined) {
@@ -60,6 +66,7 @@ DeckShoe.prototype.shuffleShoe = function() {
   console.log(this.shoe);
 };
 
+// code for getting a shoe of cards to be dealt
 let deckShoe = new DeckShoe();
 deckShoe.assembleShoe();
 deckShoe.shuffleShoe();
