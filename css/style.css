@@ -1,13 +1,14 @@
 header, footer {
-background-color: #5D4632 ;
-width: 100%;
-height: 70px;
+  background-color: #5D4632 ;
+  width: 100%;
+  height: 70px;
 }
 
 main {
   display: flex;
   justify-content: center;
   height: 80%;
+  
 }
 
 main div {
@@ -56,26 +57,36 @@ footer {
 }
 
 .large {
+  font-family:Georgia, 'Times New Roman', Times, serif;
   color: white;
-  overflow: auto;
-  height: 100px;
+  margin-bottom: 30px;
+  text-indent: 20px;
 }
 
 .small {
+  font-family:Georgia, 'Times New Roman', Times, serif;
   color: white;
-  border-width: 5px;
-  height: 100px;
+  text-indent: 20px;
+  height: 70px;
 }
 
-#rulesA {
-display: block;
-}
 
 #rules {
   background-image: url(../img/BGBlue.jpeg);
+  padding: 10px;
+  border: 5px ridge rgb(238, 186, 96);
+  height: calc(100vh - 170px);
+  /* height: 600px; */
+
 }
+ #rulesA {
+   height: 100%;
+ }
 
-
+ p {
+   line-height: 1.5;
+   font-size: large;
+ }
 /* main page table styling */
 #play-area {
 
