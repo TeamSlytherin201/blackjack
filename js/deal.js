@@ -185,8 +185,17 @@ Table.prototype.loadData = function() {
       player.money = parseInt(player.money);
       player.money = (player.isDealer === "true");
       new Player(player.name, player.money, player.isDealer);
-      console.log(playerPojo[i]);
     };
+  } else {
+    let joe = new Player("Joe", 50000, false);
+    table.addPlayer(joe, 2);
+    let jim = new Player("Jim", 50000, false);
+    table.addPlayer(jim, 1);
+    let jon = new Player("Jon", 50000, false);
+    table.addPlayer(jon, 3);
+    table.takeBet(20000, joe);
+    table.takeBet(40000, jim);
+    table.takeBet(15000, jon);
   };
 };
 
@@ -204,17 +213,10 @@ let table = new Table(dealer);
 table.loadData();
 
 
-let joe = new Player("Joe", 50000, false);
-table.addPlayer(joe, 2);
-let jim = new Player("Jim", 50000, false);
-table.addPlayer(jim, 1);
-let jon = new Player("Jon", 50000, false);
-table.addPlayer(jon, 3);
 
 
-table.takeBet(20000, joe);
-table.takeBet(40000, jim);
-table.takeBet(15000, jon);
+
+
 
 table.dealHands();
 
