@@ -1,5 +1,5 @@
 header, footer {
-background-color: lightblue;
+background-color: #5D4632 ;
 width: 100%;
 height: 70px;
 }
@@ -9,16 +9,15 @@ main {
   height: 80%;
 }
 
-#play-area {
+main div {
   width: 900px;
-  background-color: black;
-  height: 500px;
+  background-color: darkgreen;
+  height: calc(100vh - 140px);
 }
+
 header {
   display: flex;
   justify-content: center;
-  
-
 }
 
 nav {
@@ -34,5 +33,23 @@ ul {
 }
 
 li:not(:first-of-type) {
-  margin-left: 10px;
+  margin-left: 40px;
+}
+
+li a {
+  text-decoration: none;
+  color: white;
+}
+
+li a:hover{
+  color: greenyellow;
+}
+
+li a:hover, .active {
+  border-bottom: 2px solid;
+}
+
+footer {
+  position: fixed;
+  bottom: 0px;
 }
