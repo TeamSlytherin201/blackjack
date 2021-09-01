@@ -12,40 +12,78 @@ function createAndAppend(element, parent, textContent) {
   return newElem;
 };
 
-function createSeatAvailDiv() {
+function handleSubmit() {
+  let name = this.parentNode.childNodes[1].value;
+  if (name === "") {
+    alert("Please enter a name!");
+  } else {
+    this.parentNode.innerHTML = "";
+    for (let i = 0; i < Player.allPlayers.length; i++) {
+      console.log(Player.allPlayers[i]);
+      if (Player.allPlayers[i].name.toLowerCase() === name.toLowerCase()) {
+        console.log("name matches records");
+      };
+    };
+  };
+};
 
+function createNewPlayerForm() {
+  let playerDiv = this.parentNode.parentNode;
+  this.removeEventListener('click', createNewPlayerForm);
+  playerDiv.innerHTML = "";
+  createAndAppend("p", playerDiv, "Enter Your Name");
+  let newPlayerInput = createAndAppend("input", playerDiv);
+  newPlayerInput.id = playerDiv.id + "-name";
+  let submitButton = createAndAppend("button", playerDiv, "Submit");
+  submitButton.addEventListener('click', handleSubmit);
+};
+
+function createSeatAvailDiv(playerDiv) {
+  playerDiv.innerHTML = "";
+  let emptyDiv = createAndAppend("div", playerDiv);
+  emptyDiv.classList.add("empty-seat");
+  let sitButton = createAndAppend("button", emptyDiv, "Sit Here");
+  sitButton.addEventListener('click', createNewPlayerForm);
 };
 
 function createPlayerDiv(playerDiv, player) {
+  playerDiv.innerHTML = "";
   let cardDiv = createAndAppend("div", playerDiv)
   cardDiv.classList.add("cards");
   for (let i = 0; i < player.hand.length; i++) {
     let cardImg = createAndAppend("img", cardDiv);
     cardImg.src = player.hand[i].img;
   };
-  let optionDiv = createAndAppend("div", playerDiv);
-  optionDiv.classList.add("options");
-  let hitButton = createAndAppend("button", optionDiv, "Hit");
-  let standButton = createAndAppend("button", optionDiv, "Stand");
+  let optionDiv;
+  if (!player.isDealer) {
+    optionDiv = createAndAppend("div", playerDiv);
+    optionDiv.classList.add("options");
+  };
   let personDiv = createAndAppend("div", playerDiv);
   personDiv.classList.add("person");
   let nameH2 = createAndAppend("h2", personDiv, player.name);
-  let moneyP = createAndAppend("p", personDiv, player.money);
+  if (!player.isDealer) {
+    let hitButton = createAndAppend("button", optionDiv, "Hit");
+    let standButton = createAndAppend("button", optionDiv, "Stand");
+    let moneyP = createAndAppend("p", personDiv, player.money);
+  };
 };
 
-function createEmptyDiv(playerDiv) {
-
+function startingState() {
+  for (let i = 0; i < 4; i++) {
+    let playerDiv = document.getElementById("player-" + i);
+    createSeatAvailDiv(playerDiv);
+  };
 };
+
+startingState();
 
 
 for (let i = 0; i < table.players.length; i++) {
   if (i < 4) {
     let playerDivs = document.getElementsByClassName("players");
     if (table.players[i] !== null) {
-      console.log(table.players[i]);
       createPlayerDiv(playerDivs[i], table.players[i]);
-    } else {
-      createEmptyDiv(playerDivs[i]);
     }
   } else {
     let dealerDiv = document.getElementById("dealer");

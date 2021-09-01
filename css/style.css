@@ -102,11 +102,23 @@ header, footer {
  #play-area {
  }
   
-.players {
+#player-0, #player-1, #player-2, #player-3 {
   background-color:lightseagreen;
   width: 250px;
   height: 250px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cards, .options, .person {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.person {
   flex-direction: column;
 }
 

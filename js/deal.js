@@ -1,6 +1,5 @@
 "use strict";
 
-
 function Player(name, money, isDealer, id) {
   this.name = name;
   this.money = money;
@@ -149,7 +148,7 @@ Table.prototype.evaluateResults = function(dealerNatural) {
         console.log(returnString);
       } else {
         if (dealerNatural) {
-          returnString = "Both players natural 21, ";
+          returnString = "Dealer and player have natural 21, ";
         } else {
           returnString = "";
         };
@@ -170,7 +169,6 @@ Table.prototype.resetBets = function() {
 
 Table.prototype.saveData = function() {
   let playerData = Player.allPlayers.slice();
-  console.log(playerData);
   for (let i = 0; i < this.bets.length; i++) {
     let bet = this.bets[i];
     if (bet !== null) {
@@ -199,10 +197,7 @@ Table.prototype.loadData = function() {
       let newPlayer = new Player(player.name, player.money, player.isDealer);
       if (!player.isDealer) {
         table.addPlayer(newPlayer, i);
-        console.log(newPlayer.name);
-        console.log(newPlayer.money);
         table.takeBet(1000, newPlayer);
-        console.log(newPlayer.money);
       };
     };
   } else {
@@ -242,7 +237,7 @@ table.getDealer(Player.allPlayers[0]);
 table.dealHands();
 
 
-// let dealerNatural = checkIfNatural(table.players[4]);
+// 
 // if (!dealerNatural) {
 //   for (let i = 0; i < table.players.length; i++) {
 //     if (table.players[i] !== null) {
