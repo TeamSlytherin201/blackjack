@@ -46,7 +46,6 @@ Player.prototype.makeBet = function(amount) {
 function Table(dealer) {
   this.players = [null, null, null, null, dealer];
   this.bets = [null, null, null, null];
-  this.handInPlay = false;
   Table.tables.push(this);
 };
 Table.tables = [];
