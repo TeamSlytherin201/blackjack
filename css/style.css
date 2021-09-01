@@ -117,7 +117,7 @@ header, footer {
    height: 100%;
  }
   
- p {
+ #rules p {
    line-height: 1.5;
    font-size: 20px;
    color: rgb(238, 186, 96);

@@ -12,6 +12,17 @@ function createAndAppend(element, parent, textContent) {
   return newElem;
 };
 
+function startDeal() {
+  for (let i = 1; i < 3; i++) {
+    for (let j = table.players.length - 1; j > 0; j--) {
+      let player = table.players[j];
+      if (player !== null) {
+        
+      };
+    };
+  };
+};
+
 function handleSubmit() {
   let parentNode = this.parentNode;
   let name = this.parentNode.childNodes[1].value;
@@ -40,6 +51,12 @@ function handleSubmit() {
           console.log("Error app.js:42, player already seated at position.");
         };
       };
+    };
+    let dealButton = document.getElementById("deal");
+    let isHidden = dealButton.classList.contains("hidden");
+    if (isHidden) {
+      dealButton.classList.remove("hidden");
+      dealButton.addEventListener('click', startDeal);
     };
   };
 };
@@ -80,12 +97,16 @@ function createPlayerDiv(playerDiv, player) {
   if (!player.isDealer) {
     let hitButton = createAndAppend("button", optionDiv, "Hit");
     let standButton = createAndAppend("button", optionDiv, "Stand");
+    hitButton.classList.add("moves");
     hitButton.classList.add("hidden");
+    standButton.classList.add("moves");
     standButton.classList.add("hidden");
     let waitingP = createAndAppend("p", optionDiv, "Awaiting Deal");
     let moneyP = createAndAppend("p", personDiv, player.money);
   } else {
     let dealButton = createAndAppend("button", optionDiv, "Deal");
+    dealButton.id = "deal";
+    dealButton.classList.add("hidden");
   };
 };
 
@@ -94,6 +115,8 @@ function startingState() {
     let playerDiv = document.getElementById("player-" + i);
     createSeatAvailDiv(playerDiv);
   };
+  let dealerDiv = document.getElementById("dealer");
+  createPlayerDiv(dealerDiv, table.players[4]);
 };
 
 startingState();
