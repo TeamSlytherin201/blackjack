@@ -195,28 +195,19 @@ Table.prototype.loadData = function() {
       let player = playerPojo[i];
       player.money = parseInt(player.money);
       let newPlayer = new Player(player.name, player.money, player.isDealer);
-      if (!player.isDealer) {
-        table.addPlayer(newPlayer, i);
-        table.takeBet(1000, newPlayer);
-      };
     };
   } else {
     let dealer = new Player("Bob", 0, true, 0);
-    let joe = new Player("Joe", 50000, false, 1);
-    table.addPlayer(joe, 2);
-    let jim = new Player("Jim", 50000, false, 2);
-    table.addPlayer(jim, 1);
-    let jon = new Player("Jon", 50000, false, 3);
-    table.addPlayer(jon, 3);
-    table.takeBet(1000, joe);
-    table.takeBet(1000, jim);
-    table.takeBet(1000, jon);
   };
 };
 
 Table.prototype.getDealer = function() {
-  this.players.push(Player.allPlayers[0]);
-  return this.players[4];
+  if (this.players.length < 5) {
+    this.players.push(Player.allPlayers[0]);
+    return this.players[4];
+  } else {
+    return false;
+  };
 };
 
 function checkIfNatural(player) { // check if natural 21
@@ -228,23 +219,9 @@ function checkIfNatural(player) { // check if natural 21
 };
 
 
-
-
-let dealer = Player.allPlayers[0];
 let table = new Table();
 table.loadData();
-table.getDealer(Player.allPlayers[0]);
-table.dealHands();
+let dealer = Player.allPlayers[0];
+table.getDealer();
 
 
-// 
-// if (!dealerNatural) {
-//   for (let i = 0; i < table.players.length; i++) {
-//     if (table.players[i] !== null) {
-//       while (table.players[i].getTotal() < 17) {
-//         table.players[i].getCard();
-//       };
-//     };
-//   };
-// };
-//table.evaluateResults(dealerNatural);

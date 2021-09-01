@@ -220,6 +220,10 @@ h1 {
  #about-us li {
   margin: 10px;
  }
+
+ .hidden {
+   display: none;
+ };
   
  
 
