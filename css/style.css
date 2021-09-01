@@ -41,10 +41,19 @@ header, footer {
   text-decoration: none;
   color: white;
  }
-  
+  /*
  li a:hover{
   color: greenyellow;
  }
+*/
+ li a:hover{
+  animation: color-change 1s infinite;
+ }
+
+ @keyframes color-change {
+  0% { color: red; }
+  100% { color: rgb(219, 205, 73); }
+}
   
  li a:hover, .active {
   border-bottom: 2px solid;
