@@ -54,6 +54,7 @@ Player.prototype.giveMoney = function(amount) {
 function Table() {
   this.players = [null, null, null, null];
   this.bets = [null, null, null, null];
+  this.handInPlay = false;
   Table.tables.push(this);
 };
 Table.tables = [];
