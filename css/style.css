@@ -9,9 +9,8 @@ header, footer {
   justify-content: center;
   height: 80%;
   }
-
-
-#play-area {
+  
+ main div {
   width: 1300px;
   background-color: darkgreen;
   height: calc(100vh - 140px);
@@ -117,7 +116,7 @@ header, footer {
    height: 100%;
  }
   
- #rules p {
+ p {
    line-height: 1.5;
    font-size: 20px;
    color: rgb(238, 186, 96);
@@ -127,54 +126,23 @@ header, footer {
  #play-area {
  }
   
-#player-0, #player-1, #player-2, #player-3 {
+ #player-0, #player-1, #player-2, #player-3 {
   background-color:lightseagreen;
   width: 250px;
   height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.cards, .options, .person {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.person {
-  flex-direction: column;
-}
-
-#dealer-area {
+ }
+ #dealer-area {
   margin-top: 5%;
  }
-
  #dealer {
   background-color:mediumaquamarine;
   width: 400px;
   height: 250px;
   margin: auto;
   left: 500px;
-  top: 200px; 
-}
-
-.cards {
-  height: 40%;
-  width: 100%;
-}
-
-.options {
-  height: 20%;
-  width: 100%;
-}
-
-.person {
-  height: 40%;
-  width: 100%;
-}
-
+  top: 200px;
+ }
+  
  #au-page {
   display: block;
  }
@@ -239,10 +207,6 @@ h1 {
  #about-us li {
   margin: 10px;
  }
-
- .hidden {
-   display: none;
- };
   
  
-
+ 
