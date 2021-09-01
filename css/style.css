@@ -10,7 +10,7 @@ header, footer {
   height: 80%;
   }
   
- main div {
+ #play-area {
   width: 1300px;
   background-color: darkgreen;
   height: calc(100vh - 140px);
@@ -120,24 +120,28 @@ header, footer {
    height: 100%;
  }
   
- p {
+ #rules p {
    line-height: 1.5;
    font-size: 20px;
    color: rgb(238, 186, 96);
  }
   
  /* main page table styling */
- #play-area {
- }
   
- #player-0, #player-1, #player-2, #player-3 {
+ #player-0, #player-1, #player-2, #player-3, #dealer {
   background-color:lightseagreen;
   width: 250px;
   height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
  }
+
  #dealer-area {
   margin-top: 5%;
  }
+
  #dealer {
   background-color:mediumaquamarine;
   width: 400px;
@@ -212,5 +216,29 @@ h1 {
   margin: 10px;
  }
   
+ .hidden {
+   display: none;
+ }
  
- 
+
+ .cards {
+  height: 40%;
+  width: 100%;
+}
+
+.options {
+  height: 20%;
+  width: 100%;
+}
+
+.person {
+  height: 40%;
+  width: 100%;
+}
+
+.cards, .options, .person {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
