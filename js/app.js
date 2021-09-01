@@ -13,11 +13,29 @@ function createAndAppend(element, parent, textContent) {
 };
 
 function startDeal() {
+  let waitingPs = document.getElementsByClassName("waiting");
+  let first;
+  table.dealHands();
+  for (let i = 0; i < waitingPs.length; i++) {
+    waitingPs[i].classList.add("hidden");
+  };
   for (let i = 1; i < 3; i++) {
-    for (let j = table.players.length - 1; j > 0; j--) {
+    for (let j = table.players.length - 2; j > 0; j--) {
       let player = table.players[j];
+      console.log(player);
       if (player !== null) {
-        
+        let playerDiv = document.getElementById("player-" + j);
+        let cardDiv = playerDiv.getElementsByClassName("cards")[0];
+        let cardImg = createAndAppend("img", cardDiv);
+        console.log(player.hand);
+        cardImg.src = player.hand[(i - 1)].img;
+        if (i === 1 && first === undefined) {
+          let buttons = playerDiv.getElementsByClassName("moves");
+          for (let k = 0; k < buttons.length; k++) {
+            buttons[k].classList.remove("hidden");
+          };
+          first = false;
+        };
       };
     };
   };
@@ -101,7 +119,10 @@ function createPlayerDiv(playerDiv, player) {
     hitButton.classList.add("hidden");
     standButton.classList.add("moves");
     standButton.classList.add("hidden");
-    let waitingP = createAndAppend("p", optionDiv, "Awaiting Deal");
+    let waitingP = createAndAppend("p", cardDiv, "Awaiting Deal");
+    waitingP.classList.add("waiting");
+    let betP = createAndAppend("p", optionDiv, "Bet Amount");
+    let betInput = createAndAppend("input", optionDiv);
     let moneyP = createAndAppend("p", personDiv, player.money);
   } else {
     let dealButton = createAndAppend("button", optionDiv, "Deal");
