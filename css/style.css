@@ -32,15 +32,23 @@ header, footer {
   display: flex;
   align-items:center;
  }
-  
+/*
  li:not(:first-of-type) {
   margin-left: 40px;
  }
-  
+ */
+
  li a {
   text-decoration: none;
   color: white;
+  font-size: large;
+  
  }
+ 
+ nav li {
+  margin: auto 40px;
+ }
+
   /*
  li a:hover{
   color: greenyellow;
@@ -98,13 +106,20 @@ header, footer {
   
   
  }
+
+#rules-id {
+   background-color: rgba(1, 4, 10, 0.466);
+
+ }
+
  #rulesA {
    height: 100%;
  }
   
  p {
    line-height: 1.5;
-   font-size: large;
+   font-size: 20px;
+   color: rgb(238, 186, 96);
  }
   
  /* main page table styling */
@@ -135,6 +150,9 @@ header, footer {
  #about-us {
   background-image: url(../img/portraits/greenCloth.jpeg);
   text-align: center;
+  padding: 10px;
+  border: 5px ridge rgb(238, 186, 96);
+  height: calc(100vh - 170px);
   }
   
 h1 {
@@ -150,6 +168,7 @@ h1 {
  }
   
  #about-us ul {
+   
   display: block;
   margin: 10px 5px;
   border: 5px ridge rgb(238, 186, 96);
