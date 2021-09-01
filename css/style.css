@@ -24,7 +24,7 @@ header, footer {
  nav {
   display: flex;
   justify-content: space-between;
-  width: 1300px;
+  width: 900px;
   font-family: 'Press Start 2P', cursive;
  }
   
@@ -46,11 +46,7 @@ header, footer {
  }
  
  nav li {
-  margin: auto 30px;
- }
-
- nav li:last-of-type {
-   margin-right: 0px;
+  margin: auto 40px;
  }
 
   /*
