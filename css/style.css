@@ -25,6 +25,7 @@ header, footer {
   display: flex;
   justify-content: space-between;
   width: 900px;
+  font-family: 'Press Start 2P', cursive;
  }
   
  ul {
@@ -124,8 +125,15 @@ header, footer {
   
  #about-us {
   background-image: url(../img/portraits/greenCloth.jpeg);
+  text-align: center;
   }
   
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  font-size: 50px;
+}
+
  .portrait {
   border-radius:50% 50% 50% 50%; 
    width:200px;
