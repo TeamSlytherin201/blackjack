@@ -17,12 +17,22 @@ function handleSubmit() {
   if (name === "") {
     alert("Please enter a name!");
   } else {
-    this.parentNode.innerHTML = "";
+    let player;
     for (let i = 0; i < Player.allPlayers.length; i++) {
-      console.log(Player.allPlayers[i]);
       if (Player.allPlayers[i].name.toLowerCase() === name.toLowerCase()) {
         console.log("name matches records");
+        player = Player.allPlayers[i];
       };
+    };
+    if (player === undefined) { // check if player exists in stored data
+      console.log("doesn't exist");
+    } else {
+      if (table.players.includes(player)){
+        alert("Player already seated at table.");
+      } else {
+        this.parentNode.innerHTML = "";
+      };
+      console.log(player);
     };
   };
 };
