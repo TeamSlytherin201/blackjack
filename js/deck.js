@@ -22,7 +22,7 @@ Deck.prototype.assembleDeck = function() {
       } else if (this.values[v] === "A") {
         score = 11;
       };
-      var cardImg = "./img/card_";
+      var cardImg = "card_";
       cardImg += this.suits[s].toLowerCase().substr(0,3);
       cardImg += this.values[v].toLowerCase();
       cardImg += ".png";
