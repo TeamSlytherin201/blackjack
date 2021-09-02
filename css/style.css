@@ -242,3 +242,7 @@ h1 {
   justify-content: center;
   flex-direction: column;
 }
+
+.cards {
+  flex-direction: row;
+}

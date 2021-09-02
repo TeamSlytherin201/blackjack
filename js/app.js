@@ -12,32 +12,177 @@ function createAndAppend(element, parent, textContent) {
   return newElem;
 };
 
+function takeBets() {
+  for (let i = 0; i < table.players.length - 1; i++) {
+    if (table.players[i] !== null) {
+      let amount = document.getElementById("bet-" + i).value;
+      amount = parseInt(amount);
+      let betApproved = table.takeBet(amount, table.players[i]);
+      if (!betApproved) {
+        let playerDiv = document.getElementById("player-" + i);
+        createSeatAvailDiv(playerDiv);
+      };
+    };
+  };
+};
+
+function handleStand() {
+  let playerDiv = this.parentNode.parentNode;
+  let index = playerDiv.id.substr(7, 1);
+  let moveButtons = playerDiv.getElementsByClassName("moves");
+  moveButtons[0].removeEventListener('click', handleHit);
+  moveButtons[1].removeEventListener('click', handleStand);
+  moveButtons[0].classList.add("hidden");
+  moveButtons[1].classList.add("hidden");
+  let nextIndex = index - 1;
+  nextPlayer(nextIndex);
+};
+
+function handleHit() {
+  let playerDiv = this.parentNode.parentNode;
+  let index = playerDiv.id.substr(7, 1);
+  let player = table.players[index];
+  let cardIndex = player.hand.length;
+  player.getCard();
+  let card = player.hand[cardIndex];
+  let cardDiv = playerDiv.getElementsByClassName("cards")[0];
+  let cardImg = createAndAppend("img", cardDiv);
+  cardImg.src = card.img;
+  let score = playerDiv.getElementsByClassName("score")[0];
+  score.textContent = player.getTotal();
+  if (player.getTotal() > 21) {
+    let nextIndex = index - 1;
+    nextPlayer(nextIndex);
+    let moveButtons = playerDiv.getElementsByClassName("moves");
+    moveButtons[0].removeEventListener('click', handleHit);
+    moveButtons[1].removeEventListener('click', handleStand);
+    moveButtons[0].classList.add("hidden");
+    moveButtons[1].classList.add("hidden");
+  };
+};
+
+function nextPlayer(nextIndex) {
+  if (nextIndex > -2) {
+    let currentIndex;
+    let playersRemain = false;
+    for (let i = nextIndex; i >= 0; i--) {
+      if (table.players[i] !== null) {
+        playersRemain = true;
+        currentIndex = i;
+        let playerDiv = document.getElementById("player-" + i);
+        let moveButtons = playerDiv.getElementsByClassName("moves");
+        for (let j = 0; j < moveButtons.length; j++) {
+          moveButtons[j].classList.remove("hidden");
+        };
+        moveButtons[0].addEventListener('click', handleHit);
+        moveButtons[1].addEventListener('click', handleStand);
+        i = -1;
+      };
+    };
+    if (!playersRemain) {
+      table.playDealer();
+      let dealer = table.players[4];
+      let playerDiv = document.getElementById("dealer");
+      let cardDiv = playerDiv.getElementsByClassName("cards")[0];
+      let cardBack = cardDiv.childNodes[1];
+      let score = playerDiv.getElementsByClassName("score")[0];
+      cardBack.remove();
+      for (let i = 1; i < dealer.hand.length; i++) {
+        let card = createAndAppend("img", cardDiv);
+        card.src = dealer.hand[i].img;
+        score.textContent = dealer.getTotal();
+      };
+      let dealerNatural = checkIfNatural(dealer);
+      let results = table.evaluateResults(dealerNatural);
+      let nextButton = document.getElementById("next");
+      nextButton.classList.remove("hidden");
+      nextButton.addEventListener("click", nextHand);
+    };
+  };
+};
+
+function nextHand() {
+  for (let i = 0; i < table.players.length; i++) {
+    let player = table.players[i];
+    if (player !== null) {
+      let playerDiv;
+      if (i !== table.players.length - 1) {
+        playerDiv = document.getElementById("player-" + i);
+      } else {
+        playerDiv = document.getElementById("dealer");
+        table.handInPlay = true;
+      };
+      console.log(playerDiv);
+      createPlayerDiv(playerDiv, player);
+    };
+  };
+};
+
+
 function startDeal() {
+  let hasBet = false;
+  for (let i = 0; i < table.bets.length; i++) {
+    let betAmount = document.getElementById("bet-" + i);
+    console.log(betAmount);
+    if (betAmount !== "") {
+      hasBet = true;
+    };
+  };
+  if (!hasBet && table.handInPlay === true) {
+    console.log("please make a bet!");
+    return;
+  };
+  this.classList.add("hidden");
   let waitingPs = document.getElementsByClassName("waiting");
-  let first;
+  let betElems = document.getElementsByClassName("bet");
+  takeBets();
   table.dealHands();
   for (let i = 0; i < waitingPs.length; i++) {
     waitingPs[i].classList.add("hidden");
   };
-  for (let i = 1; i < 3; i++) {
-    for (let j = table.players.length - 2; j > 0; j--) {
+  for (let i = 0; i < betElems.length; i++) {
+    betElems[i].classList.add("hidden");
+  };
+  for (let i = 1; i > - 1; i--) {
+    for (let j = 4 - i; j >= 0; j--) {
       let player = table.players[j];
-      console.log(player);
-      if (player !== null) {
-        let playerDiv = document.getElementById("player-" + j);
+      if (player !== null && player.hand.length !== 0) {
+        let playerDiv;
+        let scoreDiv;
+        if (!player.isDealer) {
+          playerDiv = document.getElementById("player-" + j);
+          let moneyP = playerDiv.getElementsByClassName("money")[0];
+          moneyP.innerHTML = player.money;
+          scoreDiv = playerDiv.getElementsByClassName("score")[0];
+          scoreDiv.textContent = player.getTotal();
+        } else {
+          playerDiv = document.getElementById("dealer");
+          scoreDiv = playerDiv.getElementsByClassName("score")[0];
+          scoreDiv.textContent = player.hand[0].score;
+        } 
         let cardDiv = playerDiv.getElementsByClassName("cards")[0];
         let cardImg = createAndAppend("img", cardDiv);
-        console.log(player.hand);
-        cardImg.src = player.hand[(i - 1)].img;
-        if (i === 1 && first === undefined) {
-          let buttons = playerDiv.getElementsByClassName("moves");
-          for (let k = 0; k < buttons.length; k++) {
-            buttons[k].classList.remove("hidden");
+        let cardNum = 0;
+        if (i === 0) {
+          if (!player.isDealer) {
+            cardNum = 1;
           };
-          first = false;
+        } else {
+          cardNum = 0;
         };
+        cardImg.src = player.hand[cardNum].img;
       };
     };
+  };
+  let dealerDiv = document.getElementById("dealer");
+  let cardDiv = dealerDiv.getElementsByClassName("cards")[0];
+  let cardImg = createAndAppend("img", cardDiv);
+  cardImg.src = "./img/card_back.png";
+  let dealerNatural = checkIfNatural(table.players[4]);
+  if (dealerNatural) {
+    nextPlayer(-1);
+  } else {
+    nextPlayer(3);
   };
 };
 
@@ -109,6 +254,8 @@ function createPlayerDiv(playerDiv, player) {
   let optionDiv;
   optionDiv = createAndAppend("div", playerDiv);
   optionDiv.classList.add("options");
+  let scoreDiv = createAndAppend("div", playerDiv);
+  scoreDiv.classList.add("score");
   let personDiv = createAndAppend("div", playerDiv);
   personDiv.classList.add("person");
   let nameH2 = createAndAppend("h2", personDiv, player.name);
@@ -122,12 +269,23 @@ function createPlayerDiv(playerDiv, player) {
     let waitingP = createAndAppend("p", cardDiv, "Awaiting Deal");
     waitingP.classList.add("waiting");
     let betP = createAndAppend("p", optionDiv, "Bet Amount");
+    betP.classList.add("bet");
     let betInput = createAndAppend("input", optionDiv);
+    betInput.id = "bet-" + table.players.indexOf(player);
+    betInput.classList.add("bet");
     let moneyP = createAndAppend("p", personDiv, player.money);
+    moneyP.classList.add("money");
   } else {
     let dealButton = createAndAppend("button", optionDiv, "Deal");
     dealButton.id = "deal";
-    dealButton.classList.add("hidden");
+    if (table.handInPlay === false) {
+      dealButton.classList.add("hidden");
+    } else {
+      dealButton.addEventListener("click", startDeal);
+    };
+    let nextButton = createAndAppend("button", optionDiv, "Next Hand");
+    nextButton.id = "next";
+    nextButton.classList.add("hidden");
   };
 };
 
