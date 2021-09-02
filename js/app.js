@@ -27,21 +27,47 @@ function takeBets() {
 };
 
 function handleStand() {
-  console.log(this);
-  console.log("stand");
+  let playerDiv = this.parentNode.parentNode;
+  let index = playerDiv.id.substr(7, 1);
+  let moveButtons = playerDiv.getElementsByClassName("moves");
+  moveButtons[0].removeEventListener('click', handleHit);
+  moveButtons[1].removeEventListener('click', handleStand);
+  moveButtons[0].classList.add("hidden");
+  moveButtons[1].classList.add("hidden");
+  let nextIndex = index - 1;
+  nextPlayer(nextIndex);
 };
 
 function handleHit() {
-  console.log(this);
-  console.log("hit");
+  let playerDiv = this.parentNode.parentNode;
+  let index = playerDiv.id.substr(7, 1);
+  let player = table.players[index];
+  let cardIndex = player.hand.length;
+  player.getCard();
+  let card = player.hand[cardIndex];
+  let cardDiv = playerDiv.getElementsByClassName("cards")[0];
+  let cardImg = createAndAppend("img", cardDiv);
+  cardImg.src = card.img;
+  let score = playerDiv.getElementsByClassName("score")[0];
+  score.textContent = player.getTotal();
+  if (player.getTotal() > 21) {
+    let nextIndex = index - 1;
+    nextPlayer(nextIndex);
+    let moveButtons = playerDiv.getElementsByClassName("moves");
+    moveButtons[0].removeEventListener('click', handleHit);
+    moveButtons[1].removeEventListener('click', handleStand);
+    moveButtons[0].classList.add("hidden");
+    moveButtons[1].classList.add("hidden");
+  };
 };
 
 function nextPlayer(nextIndex) {
-  if (nextIndex > -1) {
+  if (nextIndex > -2) {
     let currentIndex;
+    let playersRemain = false;
     for (let i = nextIndex; i >= 0; i--) {
-      console.log(i);
       if (table.players[i] !== null) {
+        playersRemain = true;
         currentIndex = i;
         let playerDiv = document.getElementById("player-" + i);
         let moveButtons = playerDiv.getElementsByClassName("moves");
@@ -53,10 +79,59 @@ function nextPlayer(nextIndex) {
         i = -1;
       };
     };
+    if (!playersRemain) {
+      table.playDealer();
+      let dealer = table.players[4];
+      let playerDiv = document.getElementById("dealer");
+      let cardDiv = playerDiv.getElementsByClassName("cards")[0];
+      let cardBack = cardDiv.childNodes[1];
+      let score = playerDiv.getElementsByClassName("score")[0];
+      cardBack.remove();
+      for (let i = 1; i < dealer.hand.length; i++) {
+        let card = createAndAppend("img", cardDiv);
+        card.src = dealer.hand[i].img;
+        score.textContent = dealer.getTotal();
+      };
+      let dealerNatural = checkIfNatural(dealer);
+      let results = table.evaluateResults(dealerNatural);
+      let nextButton = document.getElementById("next");
+      nextButton.classList.remove("hidden");
+      nextButton.addEventListener("click", nextHand);
+    };
   };
 };
 
+function nextHand() {
+  for (let i = 0; i < table.players.length; i++) {
+    let player = table.players[i];
+    if (player !== null) {
+      let playerDiv;
+      if (i !== table.players.length - 1) {
+        playerDiv = document.getElementById("player-" + i);
+      } else {
+        playerDiv = document.getElementById("dealer");
+        table.handInPlay = true;
+      };
+      console.log(playerDiv);
+      createPlayerDiv(playerDiv, player);
+    };
+  };
+};
+
+
 function startDeal() {
+  let hasBet = false;
+  for (let i = 0; i < table.bets.length; i++) {
+    let betAmount = document.getElementById("bet-" + i);
+    console.log(betAmount);
+    if (betAmount !== "") {
+      hasBet = true;
+    };
+  };
+  if (!hasBet && table.handInPlay === true) {
+    console.log("please make a bet!");
+    return;
+  };
   this.classList.add("hidden");
   let waitingPs = document.getElementsByClassName("waiting");
   let betElems = document.getElementsByClassName("bet");
@@ -71,18 +146,27 @@ function startDeal() {
   for (let i = 1; i > - 1; i--) {
     for (let j = 4 - i; j >= 0; j--) {
       let player = table.players[j];
-      if (player !== null) {
+      if (player !== null && player.hand.length !== 0) {
         let playerDiv;
+        let scoreDiv;
         if (!player.isDealer) {
           playerDiv = document.getElementById("player-" + j);
+          let moneyP = playerDiv.getElementsByClassName("money")[0];
+          moneyP.innerHTML = player.money;
+          scoreDiv = playerDiv.getElementsByClassName("score")[0];
+          scoreDiv.textContent = player.getTotal();
         } else {
           playerDiv = document.getElementById("dealer");
+          scoreDiv = playerDiv.getElementsByClassName("score")[0];
+          scoreDiv.textContent = player.hand[0].score;
         } 
         let cardDiv = playerDiv.getElementsByClassName("cards")[0];
         let cardImg = createAndAppend("img", cardDiv);
         let cardNum = 0;
         if (i === 0) {
-          cardNum = 1;
+          if (!player.isDealer) {
+            cardNum = 1;
+          };
         } else {
           cardNum = 0;
         };
@@ -94,7 +178,12 @@ function startDeal() {
   let cardDiv = dealerDiv.getElementsByClassName("cards")[0];
   let cardImg = createAndAppend("img", cardDiv);
   cardImg.src = "./img/card_back.png";
-  nextPlayer(3);
+  let dealerNatural = checkIfNatural(table.players[4]);
+  if (dealerNatural) {
+    nextPlayer(-1);
+  } else {
+    nextPlayer(3);
+  };
 };
 
 function handleSubmit() {
@@ -165,6 +254,8 @@ function createPlayerDiv(playerDiv, player) {
   let optionDiv;
   optionDiv = createAndAppend("div", playerDiv);
   optionDiv.classList.add("options");
+  let scoreDiv = createAndAppend("div", playerDiv);
+  scoreDiv.classList.add("score");
   let personDiv = createAndAppend("div", playerDiv);
   personDiv.classList.add("person");
   let nameH2 = createAndAppend("h2", personDiv, player.name);
@@ -183,10 +274,18 @@ function createPlayerDiv(playerDiv, player) {
     betInput.id = "bet-" + table.players.indexOf(player);
     betInput.classList.add("bet");
     let moneyP = createAndAppend("p", personDiv, player.money);
+    moneyP.classList.add("money");
   } else {
     let dealButton = createAndAppend("button", optionDiv, "Deal");
     dealButton.id = "deal";
-    dealButton.classList.add("hidden");
+    if (table.handInPlay === false) {
+      dealButton.classList.add("hidden");
+    } else {
+      dealButton.addEventListener("click", startDeal);
+    };
+    let nextButton = createAndAppend("button", optionDiv, "Next Hand");
+    nextButton.id = "next";
+    nextButton.classList.add("hidden");
   };
 };
 
