@@ -120,23 +120,29 @@ function nextHand() {
 
 
 function startDeal() {
-  let hasBet = false;
-  for (let i = 0; i < table.bets.length; i++) {
-    let betAmount = document.getElementById("bet-" + i);
-    console.log(betAmount);
-    if (betAmount !== "") {
-      hasBet = true;
+  let hasBet = true;
+  for (let i = 0; i < table.players.length - 1; i++) {
+    let player = table.players[i];
+    if (player !== null) {
+      let betAmountInput = document.getElementById("bet-" + i);
+      console.log(betAmountInput.value);
+      if (betAmountInput.value === "") {
+        hasBet = false;
+      };
     };
   };
+
   if (!hasBet && table.handInPlay === true) {
     console.log("please make a bet!");
     return;
   };
+
   this.classList.add("hidden");
   let waitingPs = document.getElementsByClassName("waiting");
   let betElems = document.getElementsByClassName("bet");
   takeBets();
   table.dealHands();
+
   for (let i = 0; i < waitingPs.length; i++) {
     waitingPs[i].classList.add("hidden");
   };
