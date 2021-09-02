@@ -115,26 +115,25 @@ Table.prototype.evaluateResults = function(dealerNatural) {
   let players = this.players;
   let dealerTotal = players[4].getTotal();
   let bets = this.bets;
-  let returnString;
-  returnString = "Dealer Total: " + dealerTotal;
-  console.log(returnString);
+  let returnArray = [];
+  let returnString = "";
+  returnArray.push("Dealer has " + dealerTotal);
   for (let i = 0; i < players.length - 1; i++) {
     let player = players[i];
     if (player !== null) {
       let playerNatural = checkIfNatural(player);
       let playerTotal = players[i].getTotal();
-      returnString = player.name + " Total: " + playerTotal;
-      console.log(returnString);
+      returnArray.push(player.name + " has " + playerTotal);
       if (dealerNatural && !playerNatural) {
-        returnString = "Dealer has natural 21, player loses.";
-        console.log(returnString);
+        returnString = "Dealer has natural 21, " + player.name + " loses.";
+        returnArray.push(returnString);
       } else if (playerNatural && !dealerNatural) {
-        returnString = player.name + " has natural 21, player wins " + (bets[i] * 2.5);
-        console.log(returnString);
+        returnString = player.name + " has natural 21, " + player.name + " wins " + (bets[i] * 2.5);
+        returnArray.push(returnString);
         player.giveMoney((bets[i] * 2.5));
       } else if (playerTotal > 21) {
         returnString = player.name + " busted and lost " + bets[i];
-        console.log(returnString);
+        returnArray.push(returnString);
       } else if (dealerTotal > 21 || playerTotal > dealerTotal) {
         if (dealerTotal > 21) {
           returnString = "Dealer busted, ";
@@ -142,26 +141,28 @@ Table.prototype.evaluateResults = function(dealerNatural) {
           returnString = "";
         };
         returnString += player.name + " wins " + (bets[i] * 2);
-        console.log(returnString);
+        returnArray.push(returnString);
         player.giveMoney((bets[i] * 2));
       } else if (playerTotal < dealerTotal) {
         returnString = player.name + " loses " + bets[i];
-        console.log(returnString);
+        returnArray.push(returnString);
       } else {
         if (dealerNatural) {
-          returnString = "Dealer and player have natural 21, ";
+          returnString = "Dealer and " + player.name + " have natural 21, ";
         } else {
           returnString = "";
         };
         returnString += player.name + " pushes!";
-        console.log(returnString);
+        returnArray.push(returnString);
       };
       player.hand = [];
     };
+    
   };
   players[4].hand = [];
   this.resetBets();
   this.saveData();
+  return returnArray;
 };
 
 Table.prototype.resetBets = function() {

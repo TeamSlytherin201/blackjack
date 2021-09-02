@@ -97,11 +97,25 @@ function nextPlayer(nextIndex) {
       let nextButton = document.getElementById("next");
       nextButton.classList.remove("hidden");
       nextButton.addEventListener("click", nextHand);
+      let gameTextDiv = document.getElementById("game-text");
+      for (let i = 0; i < results.length; i++) {
+        gameTextDiv.textContent += results[i] + " \r\n";
+      };
+      for (let i = 0; i < table.players.length - 1; i++) {
+        if (table.players[i] !== null) {
+          let updateDiv = document.getElementById("player-" + i);
+          let money = updateDiv.getElementsByClassName("money")[0];
+          console.log(table.players);
+          money.innerHTML = table.players[i].money;
+        };
+      };
     };
   };
 };
 
 function nextHand() {
+  let gameText = document.getElementById("game-text");
+  gameText.innerHTML = "";
   for (let i = 0; i < table.players.length; i++) {
     let player = table.players[i];
     if (player !== null) {
@@ -120,6 +134,8 @@ function nextHand() {
 
 
 function startDeal() {
+  let gameText = document.getElementById("game-text");
+  gameText.innerHTML = "";
   let hasBet = true;
   for (let i = 0; i < table.players.length - 1; i++) {
     let player = table.players[i];
@@ -132,8 +148,8 @@ function startDeal() {
     };
   };
 
-  if (!hasBet && table.handInPlay === true) {
-    console.log("please make a bet!");
+  if (!hasBet) {
+    gameText.innerHTML = "Please make a bet!";
     return;
   };
 
@@ -196,7 +212,8 @@ function handleSubmit() {
   let parentNode = this.parentNode;
   let name = this.parentNode.childNodes[1].value;
   if (name === "") {
-    alert("Please enter a name!");
+    let gameText = document.getElementById("game-text");
+    gameText.innerHTML = "Please enter a name!";
   } else {
     let player;
     for (let i = 0; i < Player.allPlayers.length; i++) {
@@ -205,11 +222,12 @@ function handleSubmit() {
       };
     };
     if (player === undefined) { // check if player exists in stored data
-      let newPlayer = new Player(name, 50000, false);
+      player = new Player(name, 50000, false);
       table.saveData();
-    } else {
+    }
       if (table.players.includes(player)){
-        alert("Player already seated at table.");
+        let gameText = document.getElementById("game-text");
+        gameText.innerHTML = "Player already seated at table!";
       } else {
         let index = parentNode.id.substr(7, 1);
         let success = table.addPlayer(player,index);
@@ -220,7 +238,6 @@ function handleSubmit() {
           console.log("Error app.js:42, player already seated at position.");
         };
       };
-    };
     let dealButton = document.getElementById("deal");
     let isHidden = dealButton.classList.contains("hidden");
     if (isHidden) {
