@@ -10,6 +10,8 @@ Valton Jones - https://github.com/jones-trae
 
 Steve Ngo - https://github.com/alsosteve
 
+## Project Overview
+We were tasked with creating a website utilizing our skills learned via Code Fellows Code 201. We were to utilize html, css, vanilla javascript and use no apis or array methods like map, sort, foreach, etc or es6/7 type functionality. Additionally, we were required to utilize local storage, which is done with the player data.
 
 ## Game Idea
 This is a retro-themed black-jack game for one to possibly 4 players. The game will keep track of the user's cash reserve and deal a randomly generated hand via a virtual multi-deck shoe.
