@@ -1,4 +1,4 @@
-# Black Jack - Name TBD
+# 8 Bit Blackjack
 
 ## Team Members
 
