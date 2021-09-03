@@ -3,7 +3,7 @@ body {
 }
 
 header, footer {
-  background-image: url("/img/image.png");
+  background-image: url("https://teamslytherin201.github.io/blackjack/img/image.png");
   background-repeat:repeat-x;
   width: 100%;
   height: 70px;
