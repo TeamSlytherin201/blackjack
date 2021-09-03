@@ -254,3 +254,41 @@ h1 {
 .cards {
   flex-direction: row;
 }
+
+.lb-position {
+  display:flex;
+}
+
+#leaderboard {
+  display:flex;
+  flex-direction:column;
+  width: 600px;
+  font-size: 30px;
+  background-color: gray;
+  height: calc(100vh - 140px);
+}
+
+#leaderboard div {
+  margin-left: 15%;
+  padding-top: 8px;
+}
+
+#leaderboard div {
+  width: 60%;
+}
+
+.lb-position:first-of-type {
+  text-decoration: underline;
+}
+
+.lb-position:nth-of-type(2) {
+  color: gold;
+}
+
+.lb-position:nth-of-type(3) {
+  color: silver;
+}
+
+.lb-position:nth-of-type(4) {
+  color: #6C541E;
+}
