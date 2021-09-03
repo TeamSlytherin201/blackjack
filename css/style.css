@@ -1,3 +1,7 @@
+body {
+  background-color: black;
+}
+
 header, footer {
   background-image: url("/img/image.png");
   background-repeat:repeat-x;
@@ -20,7 +24,7 @@ header, footer {
  header {
   display: flex;
   justify-content: center;
-  
+  border-bottom: 5px ridge rgb(238, 186, 96);
  }
   
  nav {
@@ -76,6 +80,12 @@ header, footer {
  footer {
   position: fixed;
   bottom: 0px;
+  border-top: 5px ridge rgb(238, 186, 96);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
  }
   
  .large {
@@ -112,12 +122,14 @@ header, footer {
   
   
  #rules {
+  display: flex;
   background-image: url(../img/portraits/greenCloth.jpeg);
   padding: 10px;
   border: 5px ridge rgb(238, 186, 96);
   height: calc(100vh - 170px);
-  
   /* height: 600px; */
+  
+  width: 1300px;
   
   
  }
@@ -128,27 +140,29 @@ header, footer {
  }
 
  #rulesA {
-   height: 100%;
+
  }
   
  #rules p {
-   line-height: 1.5;
+   line-height: 2;
    font-size: 14px;
-   color: white;
+   color: rgb(238, 186, 96);
    font-family: 'Press Start 2P', cursive;
-   background-color: rgba(0, 100, 0, 0.507);
+   background-color: rgba(0, 100, 0, 0.707);
  }
   
  /* main page table styling */
   
  #player-0, #player-1, #player-2, #player-3, #dealer {
-  background-color:lightseagreen;
+  background-color:rgba(0,255,255,0.2);
   width: 250px;
   height: 250px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 5px ridge rgb(238, 186, 96);
+  border-radius: 25% 10%;
  }
 
  #dealer-area {
@@ -156,7 +170,6 @@ header, footer {
  }
 
  #dealer {
-  background-color:mediumaquamarine;
   width: 400px;
   height: 250px;
   margin: auto;
@@ -174,8 +187,9 @@ header, footer {
   padding: 10px;
   border: 5px ridge rgb(238, 186, 96);
   height: calc(100vh - 170px);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 10px;
+  /* font-family: 'Press Start 2P', cursive; */
+  font-size: 20px;
+  width: 1300px;
   }
   
 h1 {
@@ -193,15 +207,14 @@ h1 {
  }
   
  #about-us ul {
-   
   display: block;
   margin: 10px 5px;
   border: 5px ridge rgb(238, 186, 96);
-  width: 200px;
-  height: 300px;
+  width: 250px;
+  height: 400px;
   color: white;
   background-color: rgba(0, 100, 0, 0.507);
-  padding-top: 40px;
+  line-height: 1.2;
  }
 
   
@@ -268,6 +281,16 @@ h1 {
 
 .lb-position {
   display:flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.lb-position div:first-of-type {
+  margin-left: 20px;
+}
+
+.lb-position div:nth-of-type(2) {
+  margin-right: 20px;
 }
 
 #leaderboard {
@@ -277,16 +300,13 @@ h1 {
   font-size: 30px;
   background-color: gray;
   height: calc(100vh - 140px);
+  align-items: center;
 }
 
 #leaderboard div {
-  margin-left: 15%;
   padding-top: 8px;
 }
 
-#leaderboard div {
-  width: 60%;
-}
 
 .lb-position:first-of-type {
   text-decoration: underline;
@@ -303,3 +323,56 @@ h1 {
 .lb-position:nth-of-type(4) {
   color: #6C541E;
 }
+
+
+
+/*
+
+*/
+.btn {
+	background: #7C7C7C;
+	border-bottom: 6px inset rgba(0,0,0,.5);
+	border-left: 6px inset rgba(0,0,0,.5);
+	border-right: 6px inset rgba(255,255,255,.5);
+	border-top: 6px inset rgba(255,255,255,.5);
+	box-sizing: border-box;
+	color: white;
+	cursor: pointer;
+	font-size: .8rem;
+	padding: .5rem;
+	text-transform: uppercase;
+  width: 90px;
+  height: 35px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.btn.primary {
+	background: #881400;
+}
+
+.btn.secondary {
+	background: #005800;
+}
+
+.btn.tertiary {
+	background: #0000BC;
+}
+
+.person h2 {
+  font-size: 20px;
+}
+
+#play-area, #leaderboard {
+  font-family: 'Press Start 2P', cursive;
+  border-left: 5px ridge rgb(238, 186, 96);
+  border-right: 5px ridge rgb(238, 186, 96);
+}
+
+.score {
+  color: blue;
+}
+
+.money {
+  color: green;
+}
+
