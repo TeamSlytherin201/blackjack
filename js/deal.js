@@ -152,12 +152,13 @@ Table.prototype.evaluateResults = function(dealerNatural) {
         } else {
           returnString = "";
         };
+        player.giveMoney(bets[i]);
         returnString += player.name + " pushes!";
         returnArray.push(returnString);
       };
       player.hand = [];
+      
     };
-    
   };
   players[4].hand = [];
   this.resetBets();
