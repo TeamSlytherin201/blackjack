@@ -105,7 +105,6 @@ function nextPlayer(nextIndex) {
         if (table.players[i] !== null) {
           let updateDiv = document.getElementById("player-" + i);
           let money = updateDiv.getElementsByClassName("money")[0];
-          console.log(table.players);
           money.innerHTML = table.players[i].money;
         };
       };
@@ -126,7 +125,6 @@ function nextHand() {
         playerDiv = document.getElementById("dealer");
         table.handInPlay = true;
       };
-      console.log(playerDiv);
       createPlayerDiv(playerDiv, player);
     };
   };
@@ -141,7 +139,6 @@ function startDeal() {
     let player = table.players[i];
     if (player !== null) {
       let betAmountInput = document.getElementById("bet-" + i);
-      console.log(betAmountInput.value);
       if (betAmountInput.value === "") {
         hasBet = false;
       };
@@ -174,7 +171,7 @@ function startDeal() {
         if (!player.isDealer) {
           playerDiv = document.getElementById("player-" + j);
           let moneyP = playerDiv.getElementsByClassName("money")[0];
-          moneyP.innerHTML = player.money;
+          moneyP.innerHTML = "$" + player.money;
           scoreDiv = playerDiv.getElementsByClassName("score")[0];
           scoreDiv.textContent = player.getTotal();
         } else {
@@ -256,14 +253,18 @@ function createNewPlayerForm() {
   newPlayerInput.id = playerDiv.id + "-name";
   let submitButton = createAndAppend("button", playerDiv, "Submit");
   submitButton.addEventListener('click', handleSubmit);
+  submitButton.classList.add("btn");
+  submitButton.classList.add("tertiary");
 };
 
 function createSeatAvailDiv(playerDiv) {
   playerDiv.innerHTML = "";
   let emptyDiv = createAndAppend("div", playerDiv);
   emptyDiv.classList.add("empty-seat");
-  let sitButton = createAndAppend("button", emptyDiv, "Sit Here");
+  let sitButton = createAndAppend("button", emptyDiv, "Sit");
   sitButton.addEventListener('click', createNewPlayerForm);
+  sitButton.classList.add("btn");
+  sitButton.classList.add("secondary");
 };
 
 function createPlayerDiv(playerDiv, player) {
@@ -277,16 +278,21 @@ function createPlayerDiv(playerDiv, player) {
   let optionDiv;
   optionDiv = createAndAppend("div", playerDiv);
   optionDiv.classList.add("options");
-  let scoreDiv = createAndAppend("div", playerDiv);
-  scoreDiv.classList.add("score");
   let personDiv = createAndAppend("div", playerDiv);
   personDiv.classList.add("person");
+  
+  let scoreDiv = createAndAppend("div", personDiv);
+  scoreDiv.classList.add("score");
   let nameH2 = createAndAppend("h2", personDiv, player.name);
   if (!player.isDealer) {
     let hitButton = createAndAppend("button", optionDiv, "Hit");
     let standButton = createAndAppend("button", optionDiv, "Stand");
+    hitButton.classList.add("btn");
+    hitButton.classList.add("primary")
     hitButton.classList.add("moves");
     hitButton.classList.add("hidden");
+    standButton.classList.add("btn");
+    standButton.classList.add("secondary");
     standButton.classList.add("moves");
     standButton.classList.add("hidden");
     let waitingP = createAndAppend("p", cardDiv, "Awaiting Deal");
@@ -296,19 +302,23 @@ function createPlayerDiv(playerDiv, player) {
     let betInput = createAndAppend("input", optionDiv);
     betInput.id = "bet-" + table.players.indexOf(player);
     betInput.classList.add("bet");
-    let moneyP = createAndAppend("p", personDiv, player.money);
+    let money = "$" + player.money;
+    let moneyP = createAndAppend("p", personDiv, money);
     moneyP.classList.add("money");
   } else {
     let dealButton = createAndAppend("button", optionDiv, "Deal");
     dealButton.id = "deal";
+    dealButton.classList.add("btn");
+    dealButton.classList.add("secondary");
     if (table.handInPlay === false) {
       dealButton.classList.add("hidden");
     } else {
       dealButton.addEventListener("click", startDeal);
     };
-    let nextButton = createAndAppend("button", optionDiv, "Next Hand");
+    let nextButton = createAndAppend("button", optionDiv, "Next");
     nextButton.id = "next";
     nextButton.classList.add("hidden");
+    nextButton.classList.add("btn");
   };
 };
 
