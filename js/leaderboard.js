@@ -11,9 +11,7 @@ function updateLeaderboard() {
     let leaderboard = document.getElementById("leaderboard");
 
     let players = Player.allPlayers.slice();
-    console.log(players);
     players = sortMoney(players);
-    console.log(players);
     for (let i = 0; i < players.length; i++) {
       if (!players[i].isDealer) {
         let playerDiv = document.createElement("div");
