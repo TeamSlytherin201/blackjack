@@ -335,3 +335,37 @@ startingState();
 
 // let dealerNatural = checkIfNatural(table.players[4]);
 // table.evaluateResults(dealerNatural);
+
+var pattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+var current = 0;
+
+var keyHandler = function (event) {
+
+	// If the key isn't in the pattern, or isn't the current key in the pattern, reset
+	if (pattern.indexOf(event.key) < 0 || event.key !== pattern[current]) {
+		current = 0;
+		return;
+	}
+
+	// Update how much of the pattern is complete
+	current++;
+
+	// If complete, alert and reset
+	if (pattern.length === current) {
+		current = 0;
+    let dealerName = "";
+    alert("Congrats, you have found an easter egg to change the dealer's name. Make sure to play a round so that it saves!");
+    while (dealerName === "" || dealerName === null) {
+      dealerName = prompt("Enter a new dealer name!");
+    };
+    console.log(Player.allPlayers[0]);
+    Player.allPlayers[0].name = dealerName;
+    let dealerDiv = document.getElementById("dealer");
+    let nameH2 = dealerDiv.getElementsByTagName("h2")[0];
+    nameH2.textContent = dealerName;
+	};
+
+};
+
+// Listen for keydown events
+document.addEventListener('keydown', keyHandler, false);
