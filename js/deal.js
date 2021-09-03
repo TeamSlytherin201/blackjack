@@ -157,8 +157,8 @@ Table.prototype.evaluateResults = function(dealerNatural) {
         returnArray.push(returnString);
       };
       player.hand = [];
+      
     };
-    
   };
   players[4].hand = [];
   this.resetBets();
